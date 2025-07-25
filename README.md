@@ -34,6 +34,11 @@
             }
         }
 
+     .flex-grow {
+    flex-grow: 1;
+    width: 135px;
+}
+
        #eventList {
             overflow-y: auto; /* vertical scroll */
             /* Added overflow-x-auto for horizontal scrolling if items exceed width due to no-wrap */
