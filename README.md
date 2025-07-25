@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Planner</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -24,20 +23,28 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 1rem;
+            /* Changed for full screen on mobile, adds back on sm */
+            padding: 0; /* Default no padding */
             box-sizing: border-box;
         }
 
-         #eventList {
-    
-  overflow-y: auto; /* or scroll */
-  max-height: 20000px; /* set a height or max-height */
-}
+        @media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
+            body {
+                padding: 1rem; /* Add padding back for larger screens */
+            }
+        }
+
+       #eventList {
+            overflow-y: auto; /* vertical scroll */
+            /* Added overflow-x-auto for horizontal scrolling if items exceed width due to no-wrap */
+            overflow-x: auto; /* horizontal scroll */
+            max-height: 20000px; /* set a height or max-height */
+        }
 
         /* Custom scrollbar for event list for a more refined look */
         #eventList::-webkit-scrollbar {
-            width: 8px;
-            height: 8px; /* For horizontal scrollbar, though not expected here */
+            width: 8px; /* For vertical scrollbar */
+            height: 8px; /* For horizontal scrollbar */
         }
         #eventList::-webkit-scrollbar-track {
             background: #e0e7ff; /* Light indigo background for track */
@@ -110,19 +117,18 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-0 sm:p-4">
 
-    <div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl w-full max-w-xl mx-auto border border-gray-100 transform transition-all duration-300 ease-in-out hover:shadow-3xl">
+    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl w-full sm:max-w-xl lg:max-w-3xl xl:max-w-4xl mx-auto border border-gray-100 transform transition-all duration-300 ease-in-out hover:shadow-3xl">
         <h1 class="text-4xl font-extrabold text-gray-900 mb-8 text-center tracking-tight">Event Planner</h1>
 
-        <!-- Login Form / Logout Button Section -->
         <div class="mb-8 space-y-4">
             <div id="loginForm" class="space-y-4 p-5 border border-gray-200 rounded-xl shadow-lg bg-gray-50">
                 <p class="text-center text-gray-700 font-semibold text-lg mb-3">Log In to Manage Events</p>
                 <input type="email" id="loginEmail" placeholder="Email"
-                       class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
                 <input type="password" id="loginPassword" placeholder="Password"
-                       class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
                 <button id="loginBtn"
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg button-hover-focus-style focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-lg">
                     Log In
@@ -137,12 +143,10 @@
 
 
         <div class="mb-6 space-y-4">
-            <!-- Event Name Input with Quick-Select Buttons -->
             <div>
                 <label for="eventName" class="block text-sm font-medium text-gray-700 mb-1">Event Name</label>
                 <input type="text" id="eventName" placeholder="Enter event name"
                         class="mt-1 block w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
-                <!-- Quick-select buttons for default event names -->
                 <div class="flex flex-wrap gap-2 mt-3">
                     <button id="btnDestinationWedding" type="button"
                             class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs px-3.5 py-1.5 rounded-full font-semibold transition duration-150 ease-in-out button-hover-focus-style">
@@ -155,35 +159,30 @@
                 </div>
             </div>
 
-            <!-- Event Description Textarea -->
             <div>
                 <label for="eventDescription" class="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
                 <textarea id="eventDescription" rows="3" placeholder="Add a brief description of the event"
-                              class="mt-1 block w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out resize-y"></textarea>
+                                class="mt-1 block w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out resize-y"></textarea>
             </div>
 
-            <!-- Starting Date Input -->
             <div>
                 <label for="dateFrom" class="block text-sm font-medium text-gray-700 mb-1">Starting Date</label>
                 <input type="date" id="dateFrom"
                         class="mt-1 block w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
             </div>
 
-            <!-- NEW: Number of Dates Input -->
             <div>
-                <label for="numberOfDates" class="block text-sm font-medium text-gray-700 mb-1">Number of Dates</label>
+                <label for="numberOfDates" class="block text-sm font-medium text-gray-700 mb-1">Number of Days</label>
                 <input type="number" id="numberOfDates" placeholder="e.g., 3 for 3 days" min="1" value="1"
                         class="mt-1 block w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm input-focus-style sm:text-base transition duration-150 ease-in-out">
             </div>
 
-            <!-- Add Event Button -->
             <button id="addEventBtn" disabled
                     class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg button-hover-focus-style focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-lg">
                 Add Event
             </button>
         </div>
 
-        <!-- Message Box for Validation/Errors -->
         <div id="messageBox" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-4 font-medium" role="alert">
             <span id="messageText" class="block sm:inline"></span>
             <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="document.getElementById('messageBox').classList.add('hidden');">
@@ -191,11 +190,9 @@
             </span>
         </div>
 
-        <!-- Event List Display Area -->
         <div class="mt-8">
             <h2 class="text-3xl font-bold text-gray-800 mb-5 text-center">Upcoming Events</h2>
 
-            <!-- Date Filter Section -->
             <div class="mb-6 flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-100 shadow-inner">
                 <label for="filterDateInput" class="text-sm font-medium text-gray-700 sm:flex-shrink-0">Filter by Date:</label>
                 <input type="date" id="filterDateInput"
@@ -206,14 +203,12 @@
                 </button>
             </div>
 
-            <div id="eventList" class="space-y-4 max-h-80 overflow-y-auto pr-3 border border-gray-200 p-3 rounded-lg bg-white shadow-inner">
-                <!-- Events will be added here -->
+            <div id="eventList" class="space-y-4 max-h-80 overflow-y-auto overflow-x-auto pr-3 border border-gray-200 p-3 rounded-lg bg-white shadow-inner">
                 <p id="noEventsMessage" class="text-gray-500 text-center italic py-4">No events added yet. Add your first event above!</p>
             </div>
         </div>
     </div>
 
-    <!-- Event Detail Modal -->
     <div id="eventDetailModal" class="modal-overlay hidden">
         <div class="modal-content">
             <h2 id="modalEventName" class="text-2xl font-bold text-gray-800 mb-4 text-center"></h2>
@@ -271,7 +266,6 @@
         const btnRoomsBooked = document.getElementById('btnRoomsBooked');
         const eventDescriptionInput = document.getElementById('eventDescription');
         const dateFromInput = document.getElementById('dateFrom');
-        // REMOVED: const dateToInput = document.getElementById('dateTo');
         const numberOfDatesInput = document.getElementById('numberOfDates'); // NEW: Reference for number of dates input
 
         const addEventBtn = document.getElementById('addEventBtn');
@@ -493,6 +487,7 @@
                     dateFrom: dateFrom,
                     dateTo: dateTo, // Use the calculated 'dateTo'
                     isPaid: false, // Default to not paid
+                    paidAmount: null, // New: Store paid amount, default null
                     timestamp: serverTimestamp() // Adds a server-side timestamp for ordering
                 });
 
@@ -508,7 +503,8 @@
             }
         }
 
-        async function toggleEventPaidStatus(eventId, currentIsPaidStatus) {
+        // MODIFIED: Function to toggle paid status and manage amount
+        async function updateEventPaidStatusAndAmount(eventId, currentIsPaidStatus, currentPaidAmount) {
             if (!currentUserId) {
                 showMessage('You must be logged in to update events.', 'error');
                 return;
@@ -516,20 +512,45 @@
 
             try {
                 const eventRef = ref(db, `artifacts/${appId}/users/${currentUserId}/events/${eventId}`);
+                let newPaidStatus = !currentIsPaidStatus;
+                let newPaidAmount = null;
+
+                if (newPaidStatus) { // If becoming paid, ask for amount
+                    let amount = prompt("Please enter the amount paid:");
+                    if (amount === null) { // User cancelled
+                        return;
+                    }
+                    amount = parseFloat(amount);
+                    if (isNaN(amount) || amount < 0) {
+                        showMessage('Please enter a valid positive number for the amount.', 'error');
+                        return;
+                    }
+                    newPaidAmount = amount;
+                }
+
                 await update(eventRef, {
-                    isPaid: !currentIsPaidStatus // Toggle the status
+                    isPaid: newPaidStatus,
+                    paidAmount: newPaidAmount // Set the amount or null
                 });
-                showMessage(`Event marked as ${!currentIsPaidStatus ? 'Paid' : 'Unpaid'}.`, 'success');
+                showMessage(`Event marked as ${newPaidStatus ? 'Paid' : 'Unpaid'}${newPaidStatus && newPaidAmount ? ` (${newPaidAmount})` : ''}.`, 'success');
             } catch (e) {
-                console.error("Error updating paid status: ", e);
+                console.error("Error updating paid status or amount: ", e);
                 showMessage('Error updating paid status. Please try again.', 'error');
             }
         }
 
+
+        // MODIFIED: Function to delete event with confirmation
         async function deleteEventFromFirebase(eventId) {
             if (!currentUserId) {
                 showMessage('You must be logged in to delete events.', 'error');
                 return;
+            }
+
+            // Ask for confirmation
+            const confirmDelete = confirm("Are you sure you want to delete this event?");
+            if (!confirmDelete) {
+                return; // User cancelled the deletion
             }
 
             try {
@@ -568,15 +589,16 @@
                 noEventsMessage.classList.add('hidden'); // Hide if there are events
                 eventsToRender.forEach(event => {
                     const eventItem = document.createElement('div');
-                    // Enhanced styling for event items
+                    // Enhanced styling for event items to ensure horizontal layout on all screens and prevent wrapping
                     eventItem.classList.add(
                         'bg-white', 'p-4', 'rounded-lg', 'shadow-md', 'border', 'border-gray-100',
-                        'flex', 'flex-col', 'md:flex-row', 'justify-between', 'items-start', 'md:items-center', 'gap-3',
+                        'flex', 'flex-row', 'flex-nowrap', 'justify-between', 'items-center', 'gap-3',
                         'transform', 'transition-all', 'duration-200', 'ease-in-out', 'hover:scale-[1.01]', 'hover:shadow-lg'
                     );
 
                     const eventDetails = document.createElement('div');
-                    eventDetails.classList.add('mb-2', 'md:mb-0', 'cursor-pointer', 'flex-grow');
+                    // Added min-w-0 to allow event details to shrink when space is constrained
+                    eventDetails.classList.add('mb-2', 'md:mb-0', 'cursor-pointer', 'flex-grow', 'min-w-0');
                     eventDetails.setAttribute('data-event-name', event.eventName || '');
                     eventDetails.setAttribute('data-date-from', event.dateFrom || '');
                     eventDetails.setAttribute('data-date-to', event.dateTo || '');
@@ -608,17 +630,20 @@
                     const paidButton = document.createElement('button');
                     // Enhanced styling for paid button
                     paidButton.classList.add('font-medium', 'py-1.5', 'px-3.5', 'rounded-full', 'text-xs', 'transition', 'duration-150', 'ease-in-out', 'flex-shrink-0', 'button-hover-focus-style');
-                    if (event.isPaid) {
-                        paidButton.textContent = 'Paid';
+                    
+                    // MODIFIED: Set text content based on paid status and amount
+                    if (event.isPaid && event.paidAmount !== null) {
+                        paidButton.textContent = `${event.paidAmount} Paid`;
                         paidButton.classList.add('bg-green-500', 'hover:bg-green-600', 'text-white');
                         paidButton.classList.remove('bg-yellow-500');
                     } else {
-                        paidButton.textContent = 'Mark Paid';
+                        paidButton.textContent = 'Not Paid';
                         paidButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600', 'text-white');
                         paidButton.classList.remove('bg-green-500');
                     }
                     paidButton.addEventListener('click', () => {
-                        toggleEventPaidStatus(event.id, event.isPaid);
+                        // Pass current paid status and amount to the update function
+                        updateEventPaidStatusAndAmount(event.id, event.isPaid, event.paidAmount);
                     });
 
                     // --- Delete Button ---
@@ -627,12 +652,14 @@
                     deleteButton.classList.add('bg-red-500', 'hover:bg-red-600', 'text-white', 'font-medium', 'py-1.5', 'px-3.5', 'rounded-full', 'text-xs', 'transition', 'duration-150', 'ease-in-out', 'flex-shrink-0', 'button-hover-focus-style');
                     deleteButton.textContent = 'Delete';
                     deleteButton.addEventListener('click', () => {
+                        // This will now trigger the confirmation dialog
                         deleteEventFromFirebase(event.id);
                     });
 
                     // Group buttons in a container for better layout and responsiveness
                     const buttonContainer = document.createElement('div');
-                    buttonContainer.classList.add('flex', 'flex-col', 'sm:flex-row', 'gap-2', 'items-center', 'justify-end', 'sm:w-auto', 'w-full');
+                    // Changed to flex-row to keep buttons horizontal on all screen sizes
+                    buttonContainer.classList.add('flex', 'flex-row', 'gap-2', 'items-center', 'justify-end', 'flex-shrink-0');
                     buttonContainer.appendChild(paidButton);
                     buttonContainer.appendChild(deleteButton);
 
