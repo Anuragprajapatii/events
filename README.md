@@ -28,6 +28,12 @@
             box-sizing: border-box;
         }
 
+         #eventList {
+    
+  overflow-y: auto; /* or scroll */
+  max-height: 20000px; /* set a height or max-height */
+}
+
         /* Custom scrollbar for event list for a more refined look */
         #eventList::-webkit-scrollbar {
             width: 8px;
