@@ -32,13 +32,13 @@
             body {
                 padding: 1rem; /* Add padding back for larger screens */
             }
-             .flex-grow {
+           
+        }
+
+      .flex-grow {
     flex-grow: 1;
     width: 135px;
 }
-        }
-
-    
 
        #eventList {
             overflow-y: auto; /* vertical scroll */
