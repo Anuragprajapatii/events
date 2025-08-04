@@ -162,6 +162,10 @@
                             class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs px-3.5 py-1.5 rounded-full font-semibold transition duration-150 ease-in-out button-hover-focus-style">
                         Rooms Booked
                     </button>
+                       <button id="btnRoomsBooked" type="button"
+                            class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs px-3.5 py-1.5 rounded-full font-semibold transition duration-150 ease-in-out button-hover-focus-style">
+                       Birthday Event
+                    </button>
                 </div>
             </div>
 
