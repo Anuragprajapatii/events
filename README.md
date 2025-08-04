@@ -501,7 +501,7 @@
                 eventNameInput.value = '';
                 eventDescriptionInput.value = '';
                 dateFromInput.value = '';
-                numberOfDatesInput.value = '1'; // Reset number of dates to 1
+                numberOfDatesInput.value = ''; // Reset number of dates to 1
 
             } catch (e) {
                 console.error("Error adding event to Realtime Database: ", e);
@@ -684,7 +684,7 @@
             const eventName = eventNameInput.value.trim();
             const eventDescription = eventDescriptionInput.value.trim();
             const startingDate = dateFromInput.value; // Renamed for clarity
-            const numberOfDates = parseInt(numberOfDatesInput.value); // Get as integer
+            const numberOfDates = parseInt(numberOfDatesInput.value) + 1; // Get as integer
 
             if (!eventName || !startingDate) {
                 showMessage('Please fill in Event Name and Starting Date.', 'error');
